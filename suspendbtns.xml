@@ -2,8 +2,6 @@
 <krpano>
 	<skin_settings
 		showtext="true"
-		maxwidth="calc:stagewidth - layer[suspend_menu].width/2"
-		maxheight="calc:(stageheight - layer[suspend_menu].height)/2"
 		panel_bgcolor="0xDC1260"
 		panel_bgalpha="0.8"
 		panel_bgshadow="2 2 6 0.8 0x906676 0.5"
@@ -114,24 +112,26 @@
 
 	<!--防止溢出-->
 	<action name ="stopoverflow" >
+		set(maxwidth,calc(stagewidth - layer[suspend_menu].width/2));
+		set(maxheight,calc((stageheight - layer[suspend_menu].height)/2));
 
 		Math.abs(absY,%1.y);
 		div(halfwidth,%1.width,2);
 			
 		<!--左侧超出停止-->
-		if(%1.x GT skin_settings.maxwidth,
-			set(%1.x,get(skin_settings.maxwidth));
+		if(%1.x GT maxwidth,
+			set(%1.x,get(maxwidth));
 		);
 		<!--右侧超出停止-->
 		if(%1.x LT halfwidth,
 			set(%1.x,get(halfwidth));
 		);
 		<!--底部超出停止-->
-		if(%1.y GT skin_settings.maxheight,
-			set(%1.y,get(skin_settings.maxheight));
+		if(%1.y GT maxheight,
+			set(%1.y,get(maxheight));
 		);
-		if(%1.y LT 0 AND absY GT skin_settings.maxheight,
-			set(%1.y,calc(0-skin_settings.maxheight));
+		if(%1.y LT 0 AND absY GT maxheight,
+			set(%1.y,calc(0-maxheight));
 		);
 
 	</action>
